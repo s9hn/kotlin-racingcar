@@ -3,12 +3,21 @@ package domain
 object Referee {
 
     fun judgeWinner(cars: List<Car>): List<String> {
-        val maxDistance = cars.maxOf { it.distance.length }
+        val winnersContainer = mutableListOf<String>()
 
-        return findWinners(maxDistance, cars)
+        val maxDistance = cars.maxOf { it.distance.length }
+        findWinners(winnersContainer, maxDistance, cars)
+
+        return winnersContainer
     }
 
-    private fun findWinners(maxDistance: Int, cars: List<Car>) =
-        cars.filter { it.distance.length == maxDistance }.map { it.carName }
+    private fun findWinners(winnersContainer: MutableList<String>, maxDistance: Int, cars: List<Car>) {
+        cars.forEach {
+            compareDistanceWithMax(winnersContainer, maxDistance, it)
+        }
+    }
 
+    private fun compareDistanceWithMax(winnersContainer: MutableList<String>, maxDistance: Int, car: Car) {
+        if (car.distance.length == maxDistance) winnersContainer.add(car.carName)
+    }
 }

@@ -13,7 +13,7 @@ internal class RefereeTest {
         val expectedWinners = listOf("제이슨", "레아")
         val cars = TestCarFactory.makeCars(names, randomNumbers)
 
-        cars.forEach { it.move() }
+        cars.forEach { it.decideCarMovement() }
         val actualResult = Referee.judgeWinner(cars)
 
         assertThat(actualResult).isEqualTo(expectedWinners)

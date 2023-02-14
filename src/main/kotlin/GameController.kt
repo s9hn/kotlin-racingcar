@@ -7,26 +7,25 @@ import view.OutputView
 
 private const val EXCEPTION_NULL = "[ERROR] exception 메시지가 null입니다."
 
-class GameController() {
-    private val inputView = InputView()
-    private val outputView = OutputView()
+class GameController(
+    private val inputView: InputView,
+    private val outputView: OutputView
+) {
     private var cars: List<Car> = emptyList()
     private var tryCount: Int = 0
 
-    fun startGame() {
+    fun standByPhase() {
         val driver = Driver(RandomNumberGenerator())
         cars = getValidCar(driver)
         tryCount = getValidTryCount()
-        playInGame()
     }
 
-    private fun playInGame() {
+    fun playingPhase() {
         outputView.printResultMessage()
         playRace()
-        endGame()
     }
 
-    private fun endGame() {
+    fun endPhase() {
         val winnersResult = Referee.judgeWinner(cars)
         outputView.printWinner(winnersResult)
     }
@@ -59,7 +58,7 @@ class GameController() {
 
     private fun moveAllCar() {
         cars.forEach {
-            it.move()
+            it.decideCarMovement()
         }
     }
 
